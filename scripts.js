@@ -80,3 +80,38 @@ function addProduct(event) {
         </div>
     `;
 }
+
+// scripts.js
+const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+function addToCart(productId, productName, price) {
+    const item = {
+        id: productId,
+        name: productName,
+        price: price,
+        quantity: 1
+    };
+
+    // カートに商品が存在するかチェック
+    const existingItem = cartItems.find(item => item.id === productId);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cartItems.push(item);
+    }
+
+     1 localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateCartDisplay();
+}
+
+function updateCartDisplay() {
+    // カートの表示を更新する処理
+    // ...
+}
+function createProductElement(product) {
+    // ... (商品要素の作成)
+    const productLink = document.createElement('a');
+    productLink.href = `product_detail.html?id=${product.id}`;
+    // ... (他の要素をproductLinkに追加)
+    return productLink;
+}
